@@ -62,6 +62,18 @@ El descargador obtiene JHU, vacunación OWID y el panel OxCGRT; los archivos exi
 
 → http://localhost:8501. Filtros por territorio (país del mundo o región de Chile) y fecha de corte; KPIs por 100.000, mapa mundial y regional de Chile, ranking con supresión «<5», alerta temprana con umbral visible, fecha de corte y advertencias de calidad. La pestaña **Desafío en vivo** ejecuta `pronosticar(territorio, fecha_corte, 14)` y muestra el estado de la alerta a la fecha sorteada. Capturas en `dashboard/capturas/`.
 
+## Presentación al Comité (sesión 24-nov)
+
+`PPT_Comite_Sala_de_Crisis.pptx`: relato de 15 diapositivas construido sobre `Plantilla PPT Institucional.pptx`, con las cifras y gráficos reales del proyecto (`reports/`) y capturas del tablero (`dashboard/capturas/`). Las diapositivas son visuales (KPIs, gráficos, mapas) y el relato de 7 minutos está en las **notas del exponente** de cada lámina: cadena de datos, P1–P7, extra OxCGRT, tablero en vivo, desafío con `pronosticar(territorio, fecha_corte, 14)` y tres recomendaciones con indicador y responsable.
+
+Para regenerarla (requiere `python-pptx` y `Pillow`):
+
+```powershell
+.\.venv\Scripts\python.exe build_ppt_comite.py
+```
+
+> Completar los nombres del equipo en la portada antes de la sesión.
+
 ## Estructura
 
 ```text
@@ -82,6 +94,11 @@ src/analisis_p1_p6.py     # P1–P6 (cifras y figuras)
 src/modelos.py            # R5: pronosticar(), alerta(), backtest
 src/p7_vacunacion.py      # P7: OWID × JHU
 src/analisis_restricciones.py # Extra: OxCGRT × JHU (asociación descriptiva)
+build_ppt_comite.py       # Genera la PPT del Comité desde la plantilla institucional
+PPT_Comite_Sala_de_Crisis.pptx # Relato de 15 láminas + notas del exponente
+Plantilla PPT Institucional.pptx # Plantilla institucional UCSC
+PPT_S14_Proyecto_Sala_de_Crisis.pptx # Diapositivas de la clase de lanzamiento (S14)
+PPT_Preguntas_Comités_Sala_de_Crisis.pptx # Preguntas y dinámica de la sesión
 dashboard/app.py          # Tablero Streamlit
 docs/diccionario_datos.md # Diccionario (R2)
 docs/guia_proyecto.md    # Guía del proyecto: qué es, qué se hizo (los 3 hitos) y qué sigue
@@ -103,7 +120,11 @@ La pregunta P7 del proyecto es: **¿Cómo se relaciona la cobertura de vacunaci�
 
 ## Próximos componentes
 
-El roadmap vigente, el diccionario y las lecciones están en [`ROADMAP.md`](ROADMAP.md) y [`docs/diccionario_datos.md`](docs/diccionario_datos.md). Los informes están entregados en `docs/`; el ensayo con el ayudante (18-nov) y la sesión del Comité (24-nov) usan el tablero y el desafío en vivo descritos.
+El roadmap vigente, el diccionario y las lecciones están en [`ROADMAP.md`](ROADMAP.md) y [`docs/diccionario_datos.md`](docs/diccionario_datos.md). Los informes están entregados en `docs/`; la presentación del relato está en `PPT_Comite_Sala_de_Crisis.pptx`. El ensayo con el ayudante (18-nov) y la sesión del Comité (24-nov) usan el tablero y el desafío en vivo descritos.
+
+## Paquete comprimido de entrega
+
+`Proyecto_Sala_de_Crisis_2026-2.rar` contiene el proyecto listo para entregar: código, notebooks, informes, dashboard, capturas, resultados, **capa limpia Parquet** y la presentación del Comité. Se excluyen deliberadamente `data/raw/` (650 MB de crudos, se descargan con `src/descargar_reportes.py`), `.venv/` y `.git/`. El DW (`data/dw/`) tampoco se incluye: se regenera con el pipeline del README (paso 1 para las fuentes externas y pasos 3–4 para la identidad territorial y el almacén), que es justamente lo que valida la reproducibilidad. Por eso el paquete pesa una fracción del RAR antiguo (`proyecto gestion.rar`, 702 MB).
 
 ## Estado y entregas (al 4-nov-2026)
 
@@ -118,6 +139,8 @@ El roadmap vigente, el diccionario y las lecciones están en [`ROADMAP.md`](ROAD
 | R7 Tablero (mapa mundial y de Chile, alerta, «Desafío en vivo») | ✔ completo |
 | R8 Informes (técnico 14 pp · Comité 2 pp) y `contribuciones.md` | ✔ completo (nombres pendientes) |
 | Notebooks (`Hito 1`, `Hito 2`, `Hito 3` y `proyecto completo`) | ✔ completos, en español y ejecutados sin errores |
+| Presentación del Comité (15 láminas + notas, plantilla UCSC) | ✔ completa (nombres en portada pendientes) |
+| `Proyecto_Sala_de_Crisis_2026-2.rar` (entrega ligera, sin crudos) | ✔ generado |
 
 Detalle de avance, hitos y pendientes: [`ROADMAP.md`](ROADMAP.md). Errores encontrados y corregidos durante la construcción (bug de `pais_iso3` que excluía las series nacionales, artefacto chileno del 2020-06-17, inferencia de país por moda): documentados en `ROADMAP.md` y `docs/diccionario_datos.md`.
 

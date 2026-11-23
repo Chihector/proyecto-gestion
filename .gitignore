@@ -8,6 +8,9 @@ data/dw/
 # Resultados y artefactos generados localmente.
 reports/
 
+# Paquetes de entrega: se suben a EVA, no al repositorio.
+*.rar
+
 # Python y Jupyter.
 __pycache__/
 *.py[cod]
