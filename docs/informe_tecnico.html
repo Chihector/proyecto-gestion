@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe Técnico — Sala de crisis COVID-19</title>
+<style>
+@page {
+  size: A4;
+  margin: 17mm 16mm 16mm 16mm;
+  @bottom-center { content: "Informe Técnico — Sala de crisis COVID-19"; font-size: 8pt; color: #8a8a8a; }
+  @bottom-right  { content: "p. " counter(page) " / " counter(pages); font-size: 8pt; color: #8a8a8a; }
+  @top-right     { content: "4-nov-2026"; font-size: 8pt; color: #b9b9b9; }
+}
+@page :first { margin: 0; background: linear-gradient(160deg, #2c1a4d 0%, #4a2c7a 55%, #6d28d9 100%); }
+* { box-sizing: border-box; }
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 9.6pt; line-height: 1.32; color: #26232b;
+  counter-reset: seccion;
+}
+h1, h2, h3, h4 { font-family: "Segoe UI", Calibri, Arial, sans-serif; color: #2c1a4d; line-height: 1.25; }
+h1 { font-size: 21pt; }
+h2 { font-size: 15pt; border-bottom: 2.5px solid #6d28d9; padding-bottom: 3px; margin-top: 18px; color: #44266e; }
+h3 { font-size: 11pt; color: #5b3a99; margin-top: 12px; }
+small { color: #6b6770; }
+code, .mono { font-family: Consolas, "Courier New", monospace; background: #f2eff7; padding: 1px 5px; border-radius: 3px; font-size: 8.5pt; }
+pre { background: #f2eff7; padding: 8px 12px; border-radius: 6px; font-size: 8pt; overflow-x: auto; }
+.cover { width: 210mm; height: 297mm; color: #fff; padding: 38mm 26mm 26mm; position: relative; }
+.cover .kicker { font-family: "Segoe UI", Calibri, sans-serif; letter-spacing: 3px; text-transform: uppercase; font-size: 9.5pt; color: #cbb8ff; }
+.cover h1 { font-size: 30pt; color: #fff; line-height: 1.22; margin: 6mm 0 2mm; }
+.cover .sub { font-size: 12.5pt; color: #e3d9ff; font-family: "Segoe UI", Calibri, sans-serif; font-weight: 400; }
+.cover .meta { position: absolute; bottom: 26mm; left: 26mm; right: 26mm; font-family: "Segoe UI", Calibri, sans-serif; font-size: 9.5pt; color: #d9cdf5; border-top: 1px solid rgba(255,255,255,.35); padding-top: 6mm; }
+.cover .meta b { color: #fff; }
+.kpi-grid { display: flex; gap: 8px; margin: 10px 0; }
+.kpi { flex: 1; border: 1px solid #e0d8f0; border-left: 4px solid #6d28d9; border-radius: 6px; padding: 8px 10px; font-family: "Segoe UI", Calibri, sans-serif; background: #fbfaff; }
+.kpi .n { font-size: 17pt; font-weight: 700; color: #4a2c7a; }
+.kpi .t { font-size: 7.3pt; color: #6b6770; text-transform: uppercase; letter-spacing: .4px; }
+table { width: 100%; border-collapse: collapse; font-size: 8.2pt; margin: 10px 0; font-family: "Segoe UI", Calibri, sans-serif; }
+th { background: #2c1a4d; color: #fff; text-align: left; padding: 4px 6px; font-size: 7.6pt; letter-spacing: .3px; }
+td { border-bottom: 1px solid #e6e2ee; padding: 4px 6px; }
+tr:nth-child(even) td { background: #f8f7fc; }
+.nota { background: #f5f0ff; border-left: 4px solid #6d28d9; padding: 6px 10px; border-radius: 4px; font-size: 8.5pt; }
+.alerta { background: #fdeeee; border-left: 4px solid #b3543f; padding: 6px 10px; border-radius: 4px; font-size: 8.5pt; }
+.ok { color: #1a7f4b; font-weight: 700; }
+.warn { color: #a05a00; font-weight: 700; }
+.fail { color: #b3261e; font-weight: 700; }
+.estado-ok { background:#e8f6ee; } .estado-warn { background:#fdf3e3; } .estado-fail { background:#fdecea; }
+img.figura { width: 100%; margin: 8px 0 2px; border: 1px solid #e0d8f0; border-radius: 4px; }
+img.figura.pequena { width: 78%; margin-left: auto; margin-right: auto; display: block; }
+.caption { font-size: 8pt; color: #555; font-family: "Segoe UI", Calibri, sans-serif; margin-bottom: 10px; text-align: center; }
+.caption b { color: #2c1a4d; }
+.footer-note { font-size: 7.3pt; color: #888; border-top: 1px solid #eee; margin-top: 14px; padding-top: 6px; }
+.toc { font-family: "Segoe UI", Calibri, sans-serif; font-size: 9pt; }
+.toc ol { list-style: none; padding-left: 0; }
+.toc li { border-bottom: 1px dotted #d9d4e3; padding: 2.5px 0; }
+.toc a { text-decoration: none; color: #44266e; }
+.toc a::after { content: leader('.') " " target-counter(attr(href), page); }
+ol.refs li { margin-bottom: 4px; font-size: 8.6pt; }
+.diagram { font-family: "Segoe UI", Calibri, sans-serif; display: flex; gap: 6px; align-items: stretch; }
+.layer { flex: 1; border-radius: 6px; padding: 8px; font-size: 7.6pt; color: #fff; }
+.layer b { display: block; font-size: 8.5pt; margin-bottom: 4px; }
+.layer.raw { background: #8a7aa8; }
+.layer.clean { background: #6d28d9; }
+.layer.dw  { background: #2c1a4d; }
+.arrow { align-self: center; font-size: 16pt; color: #b9b9b9; }
+ul { margin-top: 4px; }
+li { margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">IN1232C · Gestión de Datos</div>
+  <h1>Sala de crisis COVID-19</h1>
+  <div class="sub">Del dato a la decisión con tres años de pandemia<br>Informe técnico de la plataforma, la evidencia y las recomendaciones</div>
+  <div class="meta">
+    <p><b>Equipo:</b> ____________________ (3–4 integrantes)</p>
+    <p><b>Curso:</b> Gestión de Datos (IN1232C) · <b>Fecha:</b> 4 de noviembre de 2026</p>
+    <p><b>Entregable R1–R8 ·</b> Sesión del Comité: 24-nov-2026 · Entrega final: 25-nov-2026</p>
+    <p><b>Fuentes:</b> JHU CSSE (reportes diarios, series de cotejo, tabla UID) · Our World in Data (vacunación)</p>
+  </div>
+</div>
+
+<div class="toc">
+<h2>Contenido</h2>
+<ol>
+  <li><a href="#resumen">1. Resumen ejecutivo</a></li>
+  <li><a href="#encargo">2. El encargo y cómo lo abordamos</a></li>
+  <li><a href="#arquitectura">3. R1 — Ingesta y arquitectura (3 capas, motor justificado)</a></li>
+  <li><a href="#unificacion">4. Unificación de los cinco esquemas</a></li>
+  <li><a href="#capa-limpia">5. Capa limpia Parquet: tamaño y tiempo medidos</a></li>
+  <li><a href="#calidad">6. R2 — Calidad y gobierno de datos</a></li>
+  <li><a href="#dw">7. R3 — Modelo en estrella, DW y fuente externa OWID</a></li>
+  <li><a href="#p1">8. P1 — Chile vs Sudamérica</a></li>
+  <li><a href="#p2">9. P2 — Regiones de Chile (Biobío)</a></li>
+  <li><a href="#p3">10. P3 — Letalidad aparente antes y después de vacunarse</a></li>
+  <li><a href="#p4">11. P4 — Confiabilidad de los datos por país</a></li>
+  <li><a href="#p5">12. P5 — Grupos de países con pandemias parecidas</a></li>
+  <li><a href="#p6">13. P6 — ¿Se podía anticipar ómicron? Alerta temprana</a></li>
+  <li><a href="#p7">14. P7 — Vacunación y mortalidad a 8 semanas</a></li>
+  <li><a href="#r6">15. R6 — Protección de datos y ética</a></li>
+  <li><a href="#r7">16. R7 — Tablero y desafío en vivo</a></li>
+  <li><a href="#recomendaciones">17. Tres recomendaciones con evidencia</a></li>
+  <li><a href="#limitaciones">18. Limitaciones y trabajo futuro</a></li>
+  <li><a href="#reproducibilidad">19. Reproducibilidad</a></li>
+  <li><a href="#referencias">20. Referencias</a></li>
+</ol>
+</div>
+
+<h2 id="resumen">1. Resumen ejecutivo</h2>
+
+<p>Construimos una plataforma reproducible con los tres años completos del registro histórico de Johns Hopkins (22-ene-2020 → 9-mar-2023): <b>1.143 reportes diarios</b>, <b>4.287.473 filas</b>, unificadas en una capa limpia Parquet (109 MB, 18,6 % del CSV, lectura 8,2× más rápida) y un modelo en estrella en DuckDB (4.287.374 hechos, grano territorio-día). La cadena completa se instala y se regenera con comandos documentados en el README.</p>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="n">1.143</div><div class="t">reportes unificados</div></div>
+  <div class="kpi"><div class="n">4,29 M</div><div class="t">filas en la capa limpia</div></div>
+  <div class="kpi"><div class="n">109 MB</div><div class="t">Parquet (CSV: 587 MB)</div></div>
+  <div class="kpi"><div class="n">99,95 %</div><div class="t">filas con match UID</div></div>
+</div>
+
+<p><b>Hallazgos principales:</b></p>
+<ol>
+  <li><b>Chile fue el segundo país de Sudamérica en incidencia acumulada</b> (27.162 casos/100.000, detrás de Uruguay 29.775) y segundo en mortalidad aparente (336,2/100.000, detrás de Perú 665,8). Tuvo cinco olas; la más letal fue la primera (310 fallecidos/día MA7 el 2020-07-23, tras el pico de casos del 2020-06-17) y la de mayor magnitud fue ómicron (2022-02-13, ~35.700 casos/día MA7).</li>
+  <li><b>El 2022-05-23 JHU retiró 1.097.163 casos en una corrección global</b> (Chile −9.827); Chile añadió +36.179 casos el 2020-06-17 y +1.057 fallecidos el 2020-07-17 («actas»); +11.447 fallecidos el 2022-03-21 (revisión del registro). Las correcciones se <b>conservan y se marcan</b>, nunca se borran ni imputan.</li>
+  <li><b>Ómicron no era extrapolable</b> 14 días antes (MAPE 25,7 % en el corte 2021-12-01), pero <b>la alerta temprana sí la detectó con 94 días de anticipación</b> (2021-11-11) y detectó las 5 olas con 39–100 días (mediana 48) y solo 1 falsa alarma.</li>
+  <li><b>Perú (666/100.000) y Chile (336)</b> lideran mortalidad aparente por las reconciliaciones del registro; EE.UU. concentra el peor índice de calidad (34,0) por sus correcciones masivas de condados.</li>
+</ol>
+
+<p><b>Recomendaciones (sección 17):</b> (1) plataforma única auditada desde el día 1 con reglas de calidad ejecutadas en cada carga; (2) alerta temprana operativa con evaluación histórica obligatoria; (3) tablero público con calidad visible y supresión 1–4.</p>
+
+<h2 id="encargo">2. El encargo y cómo lo abordamos</h2>
+<p>El Comité Asesor encargó: (i) construir una plataforma de datos confiable con el registro histórico; (ii) responder con evidencia qué pasó en Chile y el mundo y qué datos habrían permitido anticiparlo; (iii) entregar un tablero usable en vivo y tres recomendaciones. Trabajamos sobre el enunciado completo: R1–R8, preguntas P1–P7 y las restricciones de entrega (repositorio reproducible, ZIP, informes, tablero).</p>
+<p><b>Decisiones de alcance y método:</b> se usó JHU CSSE como fuente canónica y OWID (vacunación) como fuente externa por cruce ISO3 (la fuente externa propuesta en el roadmap, adoptada). Se declaró el grano <b>territorio canónico × día</b>. Las correcciones y artefactos de JHU se marcan, no se corrigen (corregir sería inventar). Toda la documentación distingue cifras «publicadas» de «limpias para cálculo».</p>
+
+<h2 id="arquitectura">3. R1 — Ingesta y arquitectura</h2>
+<div class="diagram">
+  <div class="layer raw"><b>1 · Crudo (CSV)</b>1.143 reportes MM-DD-YYYY.csv · series time_series_* · UID_ISO_FIPS_LookUp_Table.csv · OWID vaccinations.csv<br><br>Descarga reproducible: <code>python src/descargar_reportes.py</code><br>(978 nuevos el 4-nov; reutiliza lo existente; errores explícitos)</div>
+  <div class="arrow">→</div>
+  <div class="layer clean"><b>2 · Limpio (Parquet)</b><code>python src/ingesta.py</code><br>Unifica 5 esquemas · snake_case · <code>report_date</code> desde el archivo · <code>etapa_esquema</code> · <code>clave_raw</code> (linaje) · nulos conservados</div>
+  <div class="arrow">→</div>
+  <div class="layer dw"><b>3 · Analítico (DW)</b><code>python src/territorios.py</code> (identidad) → <code>python src/construir_dw.py</code> (DuckDB estrella) → <code>python src/calidad.py</code> (reglas)</div>
+</div>
+
+<h3>Motor elegido: DuckDB — y por qué</h3>
+<p>Frente a SQLite: DuckDB consulta Parquet directamente, tiene agregaciones analíticas y ventanas paralelas (usamos <code>lag()</code> para nuevos y retrocesos), y es un único archivo embebible en el repositorio. Frente a PostgreSQL: cero infraestructura, ideal para entrega reproducible; si el Comité pide escalar, la migración a Postgres/BigQuery es directa porque el modelo ya está en estrella. Frente a una alternativa NoSQL (MongoDB): el problema es relacional y de agregación; un documento por fila no aporta y sí rompe las garantías de grano.</p>
+<div class="nota"><b>Equivalente en la nube (nivel excelente, estimación):</b> AWS S3 (datos crudos+Parquet, ~0,7 GB ≈ US$0,02/mes) + RDS PostgreSQL db.t4g.micro (US$12–15/mes) + EC2 t3.small para el tablero (US$15/mes) + backups ≈ <b>US$35–50/mes</b>; o GCP Cloud Run + BigQuery (free tier holgado) ≈ US$10–30/mes. El pipeline corre hoy en local en &lt;10 min desde cero.</div>
+
+<h2 id="unificacion">4. Unificación de los cinco esquemas</h2>
+<table>
+<thead><tr><th>Etapa</th><th>Vigencia</th><th>Columnas (esquema crudo)</th><th>Filas</th></tr></thead>
+<tbody>
+<tr><td>etapa_1</td><td>2020-01-22 → 2020-02-29</td><td>Province/State, Country/Region, Last Update, Confirmed, Deaths, Recovered</td><td>4.242</td></tr>
+<tr><td>etapa_2</td><td>2020-03-01 → 2020-03-21</td><td>+ Latitude, Longitude</td><td>5.555</td></tr>
+<tr><td>etapa_3</td><td>2020-03-22 → 2020-05-28</td><td>FIPS, Admin2, Province_State, Country_Region, Last_Update, Lat, Long_, Confirmed, Deaths, Recovered, Active, Combined_Key</td><td>217.486</td></tr>
+<tr><td>etapa_4</td><td>2020-05-29 → 2020-11-08</td><td>+ Incidence_Rate, Case-Fatality_Ratio</td><td>643.463</td></tr>
+<tr><td>etapa_5</td><td>2020-11-09 → 2023-03-09</td><td>Incidence_Rate/Case-Fatality_Ratio → <b>Incident_Rate / Case_Fatality_Ratio</b></td><td>3.416.727</td></tr>
+</tbody>
+</table>
+
+<p><b>Reglas aplicadas:</b> nombres a snake_case; <code>report_date</code> proviene del nombre del archivo (nunca <code>last_update</code>, que se conserva como «momento en que JHU actualizó la fila»); <code>etapa_esquema</code> se detecta por el <b>conjunto de columnas crudas</b> antes de renombrar (las etapas 4 y 5 solo difieren en la escritura de dos columnas, y se distinguen así); las columnas que aún no existían quedan nulas; ningún archivo quedó con etapa desconocida. <code>FIPS</code> se guarda como texto de 5 dígitos; los conteos como enteros nulos.</p>
+
+<div class="nota"><b>Identidad territorial (previa obligatoria):</b> 4.410 claves crudas → <b>4.284 territorios canónicos</b>. <b>99,95 % de las filas empatan con la tabla UID</b> (99,90 % con iso3). Alias documentados: erratas JHU («Australian Capneital…», «Fench Guiana…»), anudamiento censal de EE.UU. (Yakutat, Lake and Peninsula, Southwest Utah) y territorios que la UID lista bajo su país administrador (Hong Kong→China; Aruba→Países Bajos; Puerto Rico→EE.UU.). <code>Taiwan</code> (et. 1–2) y <code>Taiwan*</code> (et. 3–5) son una sola serie. <b>Chile pasa a reporte regional el 2020-05-20</b> (16 regiones + <code>Unknown</code>); los 3 días nacionales de Australia (2020-01-23/25/26) se consolidan con la regla anti doble conteo (fila país si existe; si no, se suman subnacionales; columna <code>granularidad</code> indica cuál). Entidades no-país (barcos, Juegos Olímpicos, Antártida) quedan como <code>nivel='especial'</code> y no entran en comparaciones.</div>
+
+<h2 id="capa-limpia">5. Capa limpia Parquet</h2>
+<table>
+<thead><tr><th>Medición (4-nov-2026)</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td>CSV (suma de 1.143 archivos)</td><td>587,1 MB</td></tr>
+<tr><td>Parquet (snappy)</td><td><b>109,0 MB (18,6 % del CSV)</b></td></tr>
+<tr><td>Lectura + consolidación CSV (mejor de 2)</td><td>21,58 s</td></tr>
+<tr><td>Lectura Parquet (mejor de 2)</td><td><b>2,63 s (8,2× más rápido)</b></td></tr>
+<tr><td>Filas consolidadas / filas en DW</td><td>4.287.473 / 4.287.374 (99 duplicados fusionados conservando el mayor acumulado)</td></tr>
+<tr><td>Fechas</td><td>1.143/1.143 (2020-01-22 → 2023-03-09)</td></tr>
+</tbody>
+</table>
+<p><b>Duplicados del mismo territorio/fecha:</b> 99 pares (p. ej. «Aruba» + «Aruba, Netherlands» el 2020-03-18/19). JHU publicó dos grafías el mismo día en las transiciones de nombre. El DW exige grano territorio×día: se conserva la fila de <b>mayor acumulado</b> y se cuenta en el informe de controles. Nunca se suman.</p>
+<h2 id="calidad">6. R2 — Calidad y gobierno de datos</h2>
+<p>Reglas ejecutables en <code>src/calidad.py</code> (<code>python src/calidad.py</code>), en las seis dimensiones, con umbral y estado; detalle completo en <code>reports/calidad_reglas.json</code> y el diccionario completo en <code>docs/diccionario_datos.md</code>. <b>Resultado: 5 ok · 10 warn · 1 fail.</b></p>
+<table>
+<thead><tr><th>Dimensión</th><th>Regla (umbral)</th><th>Valor medido</th><th>Estado</th><th>Decisión</th></tr></thead>
+<tbody>
+<tr><td>Completitud</td><td>Cobertura fechas (1.143/1.143)</td><td>1.143/1.143</td><td class="estado-ok">ok</td><td>Ningún día sin reporte</td></tr>
+<tr><td>Completitud</td><td>Nulos en confirmed / deaths</td><td>28 / 433 (0,001 % / 0,01 %)</td><td class="estado-warn">warn</td><td>Se conservan; no se imputan</td></tr>
+<tr><td>Completitud</td><td>recovered/active discontinuados (informativa)</td><td>65,97 % / 66,19 % nulos (JHU dejó de publicar desde 2021-03)</td><td class="estado-warn">warn</td><td>Excluidos de P1–P7 y modelos</td></tr>
+<tr><td>Completitud</td><td>Población en territorios (≥ 90 %)</td><td>4.019/4.284 (93,8 %)</td><td class="estado-ok">ok</td><td>Sin población: fuera de tasas/100k</td></tr>
+<tr><td>Unicidad</td><td>Duplicados territorio×fecha = 0 tras consolidación</td><td>0</td><td class="estado-ok">ok</td><td>99 fusionados (max acumulado)</td></tr>
+<tr><td>Validez</td><td>Acumulados negativos = 0</td><td>7 filas crudas (Colombia 2020-11-02; Unassigned EE.UU. 2022)</td><td class="estado-fail">fail</td><td>Se conservan y MARCAN; excluidas de análisis/modelos</td></tr>
+<tr><td>Validez</td><td>lat/long en rango; población &gt; 0</td><td>0 / 0 violaciones</td><td class="estado-ok">ok</td><td>Sin violaciones</td></tr>
+<tr><td>Validez</td><td>CFR &gt; 100 (explicar)</td><td>2.001 filas</td><td class="estado-warn">warn</td><td>Se conservan; nunca comparar letalidad sin la advertencia</td></tr>
+<tr><td>Validez</td><td>deaths &gt; confirmed (explicar)</td><td>10.777 filas (RU jun-2020; Perú jun-2021)</td><td class="estado-warn">warn</td><td>Se marcan; no se corrigen</td></tr>
+<tr><td>Consistencia</td><td>|active − (confirmed−deaths−recovered)| ≤ 1</td><td>168.076/1.449.599 (3,92 % difieren &gt;1)</td><td class="estado-warn">warn</td><td>Metodología JHU; no se fuerza</td></tr>
+<tr><td>Consistencia</td><td>Retrocesos del acumulado (explicar y marcar)</td><td>44.587 filas; <b>2022-05-23: 2.496 retrocesos, 1.097.163 casos retirados</b></td><td class="estado-warn">warn</td><td>Marcados; día excluido de promedios/modelos</td></tr>
+<tr><td>Consistencia/exactitud</td><td>Series vs reportes al cierre</td><td>Δ confirmed = 0 (676.570.149 exacto); Δ fallecidos = 2; 2020-06-30: +32.807 (+0,31 %)</td><td class="estado-warn">warn</td><td>Reportes diarios = fuente canónica; series = cotejo</td></tr>
+<tr><td>Oportunidad</td><td>Gaps ≤ 7 días nivel país</td><td>máx 44 días; 4 gaps &gt; 7 (reporte semanal 2022)</td><td class="estado-warn">warn</td><td>Se marcan; no se interpola</td></tr>
+<tr><td>Oportunidad</td><td>Picos &gt; 3× mediana previa 7d (informativa)</td><td>166.395 territorio-días</td><td class="estado-warn">warn</td><td>Se anotan; no se suavizan</td></tr>
+</tbody>
+</table>
+
+<div class="alerta"><b>2022-05-23 — corrección global masiva:</b> JHU retiró 1.097.163 casos en un día (EE.UU. −241.915; Brasil −47.196; Japón −67.274; Chile −9.827). El DW los conserva <b>marcados</b>; las series de nuevos los muestran anotados; los modelos y promedios los excluyen. Las cifras publicadas «llamadas a misa» siguen siendo las oficiales de JHU; nuestro deber era no enmascararlas.</div>
+
+<h3>Índice de calidad por país (0–100)</h3>
+<p><code>100 − 30·min(1, retrocesos/días) − 20·min(1, días_gap&gt;7/días) − 20·min(1, fallec&gt;casos/10) − 10·min(1, neg./5) − 10·min(1, CFR&gt;100/20)</code>. Peores: <b>USA 34,0</b> (54.746 retrocesos, 7.125 fallec&gt;casos, 1.347 CFR&gt;100 — volumen y correcciones de condados, no «datos malos» sin contexto), COL 64,1 (1 gap), PER 65,8, BEL 69,5, PRK 70,0. Decisiones por país en <code>reports/calidad_pais.csv</code>: marcado, exclusión de modelos y anotación en el tablero (sección 16). El índice prioriza revisión; no castiga países con mejor reporte.</p>
+
+<h3>Linaje (R2 nivel excelente)</h3>
+<p>Toda fila del DW se enlaza a <b>archivo</b> (<code>MM-DD-YYYY.csv</code> ← fecha) y a <b>territorio</b> (<code>clave_raw</code> → fila de la tabla UID cuando <code>match_uid</code>). Ejemplo verificable: Chile 2023-03-09 ← <code>03-09-2023.csv</code>, filas «,Amazonas,Chile,…» → UID #. Ningún número del tablero queda sin procedencia.</p>
+
+<h2 id="dw">7. R3 — Modelo en estrella, DW y fuente externa OWID</h2>
+<p><b>Grano declarado:</b> territorio canónico × día (1.143 días). Dimensiones: <code>dim_fecha</code> (1.143: año, mes, trimestre, semana ISO, día ISO, fin de semana) y <code>dim_territorio</code> (4.284: clave UID, <code>nivel</code> país/región-estado/condado/especial, iso3/iso2, <code>pais_iso3</code> lógico — CHL para las 16 regiones y Unknown —, uid, población, lat/long, <code>match_uid</code>, <code>claves_fusionadas</code>). Hechos: <code>fact_covid</code> (4.287.374 filas) con acumulados, <b>new_confirmed/new_deaths/new_recovered</b> (por diferencia; primer reporte = NULL, nunca 0 inventado) y <b>retroceso_confirmed/retroceso_deaths</b> (marcado). Controles: 0 duplicados, 0 fechas sin dimensión, 1.143/1.143 días.</p>
+<p><b>Vistas:</b> <code>v_nacional_acum</code> (anti doble conteo: fila país si existe, si no se suman subnacionales; columna <code>granularidad</code>), <code>v_nacional_dia</code> (nuevos por país) y <code>vl_chile_regiones</code>.</p>
+
+<p><b>Integración OWID (vacunación, cruce ISO3 = iso_code): 201/218 países de <code>v_nacional_acum</code> (92,2 %).</b> El cruce compara los países distintos del agregado JHU con los ISO3 de OWID, excluyendo sus agregados <code>OWID_*</code>. No cruzan directamente: ATA, BLM, ERI, FSM, GLP, GUF, GUM, MAF, MHL, MTQ, MYT, PLW, PRI, PRK, REU, VAT y XKS. OWID publica Kosovo como <code>OWID_KOS</code>; no se fuerza ese mapeo. Los territorios-región no tienen serie nacional en OWID. Chile cruza (última semana disponible con 90,3 % vacunación completa).</p>
+
+<p><b>Consultas OLAP (sobre el DW, no sobre CSV)</b> — extracto (<code>reports/olap_consultas.txt</code>):</p>
+<table>
+<thead><tr><th>Operación</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td>Roll-up · mundo por año</td><td>2020: 85,4 M casos; 2021: 208,0 M; 2022: 379,4 M (año del ómicron); 2023 (a 9-mar): 16,4 M</td></tr>
+<tr><td>Roll-up · Chile por año</td><td>2020: 608.972 casos / 16.608 fallec. · 2021: 1.197.521 / 22.720 · 2022: 3.240.860 / 24.082 · 2023: 154.759 / 1.101</td></tr>
+<tr><td>Drill-down · Chile 2021 por región</td><td>Los Ríos 11.690 casos/100k; Tarapacá 8.917; Los Lagos 8.877; Biobío 7.732; Metropolitana 6.105</td></tr>
+<tr><td>Slice · mar-2021 (corte temporal)</td><td>BRA 2,21 M casos; EE.UU. 1,82 M; India 1,11 M; Perú 224.944 casos / 20.914 fallec.; Chile 170.913 / 2.563</td></tr>
+<tr><td>Dice · Chile 2020×2021 por región</td><td>Metropolitana 277.875→434.247; Biobío 46.167→120.371; Valparaíso 33.957→102.541</td></tr>
+<tr><td>KPI · fallecidos/100k por país (min. 100.000 hab.)</td><td>Perú 665,8 · Bulgaria 550,2 · Hungría 504,8 · Bosnia 496,2 · Chile no está en el top 10 (336)</td></tr>
+</tbody>
+</table>
+<p><b>El DW responde, no el CSV:</b> todas las cifras de este informe salen de DuckDB (vistas <code>v_nacional_*</code> y drill-down regional).</p>
+
+<h2 id="p1">8. P1 — ¿Cómo vivió Chile la pandemia comparado con Sudamérica?</h2>
+
+<img class="figura" src="../reports/fig_p1_suramerica.png" alt="Tasas acumuladas Sudamérica">
+<div class="caption"><b>Figura 8.1</b> — Incidencia y mortalidad aparente acumuladas por 100.000 hab. Chile en rojo. Fuente: DW (v_nacional_dia).</div>
+
+<table>
+<thead><tr><th>País</th><th>Casos/100k</th><th>Fallecidos/100k</th></tr></thead>
+<tbody>
+<tr><td>Uruguay</td><td>29.775</td><td>219,3</td></tr>
+<tr><td><b>Chile</b></td><td><b>27.162</b></td><td><b>336,2</b></td></tr>
+<tr><td>Argentina</td><td>22.225</td><td>288,7</td></tr>
+<tr><td>Brasil</td><td>17.445</td><td>329,0</td></tr>
+<tr><td>Perú</td><td>13.610</td><td>665,8</td></tr>
+<tr><td>Colombia</td><td>12.498</td><td>279,7</td></tr>
+<tr><td>Paraguay</td><td>11.334</td><td>278,7</td></tr>
+<tr><td>Bolivia</td><td>10.231</td><td>191,6</td></tr>
+<tr><td>Ecuador</td><td>5.992</td><td>204,1</td></tr>
+<tr><td>Venezuela</td><td>1.942</td><td>20,6</td></tr>
+</tbody>
+</table>
+
+<img class="figura" src="../reports/fig_p1_chile_olas.png" alt="Olas de Chile">
+<div class="caption"><b>Figura 8.2</b> — Olas de Chile (casos y fallecidos, media móvil 7 días; días de corrección masiva excluidos del MA7). Picos: 2020-06-17 (5.999 casos/día), 2021-04-14 (7.321), <b>2022-02-13 ómicron (35.656)</b>, 2022-06-17 (10.548), 2022-11-10 (7.052).</div>
+
+<p><b>Síntesis:</b> Chile es el 2.º país de Sudamérica en incidencia y mortalidad aparente acumuladas. <b>Tuvo cinco olas.</b> La más letal fue la <b>primera</b>: 310 fallecidos/día MA7 el 2020-07-23 (tras el pico de casos del 2020-06-17, MA7 5.999 tras excluir el inserto de +36.179 casos); la de mayor magnitud, <b>ómicron</b> (2022-02-13, ~35.656 casos/día MA7, ~150 fallecidos/día MA7). En 2022 Chile sumó 3,24 M de casos (casi la mitad de todo su acumulado). <b>El año con más fallecidos fue 2022 (24.082), y el de mayor letalidad aparente 2020 (16.608 fallecidos con 609.000 casos).</b></p>
+
+<h2 id="p2">9. P2 — Regiones de Chile: ¿cuáles golpearon más y en qué ola?</h2>
+
+<img class="figura" src="../reports/fig_p2_regiones.png" alt="Mortalidad regional">
+<div class="caption"><b>Figura 9.1</b> — Fallecidos por 100.000 hab. por región (jun-2020 a mar-2023; Biobío en rojo).</div>
+
+<img class="figura" src="../reports/fig_p2_mapa_chile.png" alt="Mapa de burbujas Chile">
+<div class="caption"><b>Figura 9.2</b> — Burbujas por incidencia; color = fallecidos/100.000. (Mapa georreferenciado con la latitud/longitud de la tabla UID; en el tablero es interactivo.)</div>
+
+<p><b>Biobío ocupa el puesto 10 de 16 regiones en fallecidos por 100.000</b> (310,1/100.000; 32.725 casos/100.000, puesto 8). Los extremos sur/austral lideran la mortalidad aparente: <b>Magallanes 467,8</b> (muy golpeada en la 1.ª ola y en ómicron), <b>Metropolitana 434,8</b> (concentra el mayor volumen: 9.144 fallecidos solo en 2021), Arica y Parinacota 399,9, Los Ríos 367,4, Valparaíso 356,7, Tarapacá 355,8. Las 2.ª y 3.ª olas (fines de 2020 y mediados de 2021) fueron particularmente duras fuera de Metropolitana (Magallanes, Biobío y Araucanía).</p>
+
+<h2 id="p3">10. P3 — Letalidad aparente antes y después de la vacunación</h2>
+<img class="figura" src="../reports/fig_p3_letalidad.png" alt="CFR y vacunación">
+<div class="caption"><b>Figura 10.1</b> — CFR mensual (línea) y % población con vacunación completa (barras OWID): Chile, Perú, EE.UU. y Brasil. Días de corrección masiva excluidos del numerador/denominador mensual.</div>
+
+<p><b>Chile — CFR acumulada hasta enero 2021 (pre-vacunación masiva): 2,54 %; desde junio 2021: 0,92 %.</b> La caída se explica <b>en parte</b> por la vacunación (la mortalidad cayó al avanzar la cobertura: 2,33 → 1,25 fallecidos/100.000/sem antes/después del 50 % de cobertura) y <b>en parte</b> por el testeo: ómicron detectó muchos más casos leves (CFR cayó mecánicamente). <b>Advertencia obligatoria:</b> la letalidad aparente no es la letalidad del virus; depende del testeo y del registro. Los picos de 2021-07/08 reflejan la revisión del registro de fallecidos repartida en semanas; el 2022-03-21 (+11.447) está excluido del numerador; el repunte final de Perú es artefacto de sub-reporte de casos.</p>
+<div class="nota"><b>Cómo leerlo:</b> las comparaciones internacionales de CFR exigen cautela (definición de muerte, sistema de salud, testeo). Para comparar países se prefiere <b>fallecidos por 100.000 hab.</b> (sección 8) y, dentro de cada país, la tendencia mensual con las correcciones anotadas.</div>
+
+<h2 id="p4">11. P4 — ¿Qué tan confiables son los datos de cada país?</h2>
+<p>Índice de calidad (0–100, fórmula en §6). <b>Los 10 peores:</b> USA 34,0 · COL 64,1 · PER 65,8 · BEL 69,5 · PRK 70,0 · NLD 71,4 · CAN 78,7 · GBR 79,3 · DEU 88,0 · MEX 89,4.</p>
+<p><b>Causas dominantes:</b> USA — 54.746 retrocesos (correcciones de condados, volumen masivo), 7.125 filas fallec&gt;casos (atribución), 1.347 CFR&gt;100. COL — 234 retrocesos y 508 fallec&gt;casos (1 gap). PER — 466 retrocesos (la reconciliación oficial 2021), 13 fallec&gt;casos. GBR — 1.377 fallec&gt;casos (junio 2020: fallecidos sin casos vinculados — <b>el dato de Reino Unido ese mes no debe usarse para CFR</b>).</p>
+<p><b>Decisiones tomadas (documentadas en el diccionario §5):</b> marcar y conservar; 2022-05-23 y filas negativas excluidos de promedios/modelos; ninguna cifra se «arregla» a mano; los países con índice &lt;70 se usan con advertencia en el tablero; EE.UU. y Perú se citan siempre con su contexto de corrección.</p>
+
+<h2 id="p5">12. P5 — Grupos de países con pandemias parecidas</h2>
+<p><b>Método:</b> el enunciado permite forma de la curva o indicadores. La forma pura (incidencia semanal normalizada por el máximo) resultó homogénea en todo el mundo (silueta 0,09–0,10: todos los picos convergen en ómicron) — hallazgo en sí. Se usaron <b>indicadores</b>: log₁₀ de casos y fallecidos/100.000, log₁₀ CFR, cuota de casos en 2020 y en 2022+, y nº de olas (picos MA7 ≥10 % del máximo, distancia ≥120 días). <b>k=3</b> por silueta (0,325); 131 países con ≥100.000 casos.</p>
+<img class="figura pequana" src="../reports/fig_p5_clusters.png" alt="Clusters">
+<div class="caption"><b>Figura 12.1</b> — Segmentación KMeans (k=3) proyectada en 2 componentes principales.</div>
+<table>
+<thead><tr><th>Grupo</th><th>Países</th><th>Casos/100k medio</th><th>Fallec./100k medio</th><th>CFR %</th><th>Cuota 2022</th><th>Lectura</th></tr></thead>
+<tbody>
+<tr><td>2</td><td>51</td><td>39.520</td><td>164,8</td><td>0,41</td><td>68 %</td><td>Ómicron-dominante, alta detección (Europa, Esta-Asia, Uruguay, Canadá, Australia)</td></tr>
+<tr><td><b>0</b></td><td><b>54</b></td><td><b>15.236</b></td><td><b>231,2</b></td><td><b>1,50</b></td><td><b>37 %</b></td><td><b>Olas múltiples, CFR aparente alta: América Latina + Europa del Este + EE.UU. (aquí está Chile)</b></td></tr>
+<tr><td>1</td><td>26</td><td>1.248</td><td>19,2</td><td>1,41</td><td>22 %</td><td>Baja incidencia reportada / testeo limitado (África, Asia del Sur, Venezuela, China)</td></tr>
+</tbody>
+</table>
+<p><b>Chile queda en el grupo 0:</b> pandemias de olas múltiples con CFR aparente alta, donde ómicron dominó en volumen pero no en mortalidad. Es el grupo donde el esfuerzo de preparación se habría pagado más: más olas, más muertes evitables si falla la respuesta.</p>
+
+<h2 id="p6">13. P6 — ¿Se podía anticipar ómicron en Chile?</h2>
+<p><b>Pronóstico sin fuga de datos:</b> <code>pronosticar(territorio, fecha_corte, horizonte=14)</code> solo lee datos ≤ corte. Dos modelos: base (media móvil 7 días proyectada plana) y Holt (suavizamiento exponencial con tendencia amortiguada). Evaluación en tres cortes:</p>
+<table>
+<thead><tr><th>Corte</th><th>MAE base</th><th>MAPE base</th><th>MAE Holt</th><th>MAPE Holt</th></tr></thead>
+<tbody>
+<tr><td>2020-09-15</td><td>267,6</td><td>18,9 %</td><td>262,6</td><td>17,2 %</td></tr>
+<tr><td>2021-03-15</td><td>1.593,9</td><td>24,7 %</td><td>1.474,9</td><td>23,7 %</td></tr>
+<tr><td>2021-12-01</td><td>564,2</td><td>42,3 %</td><td>451,0</td><td>25,7 %</td></tr>
+</tbody>
+</table>
+<div class="nota"><b>Ómicron no era extrapolable</b> 14 días antes: al corte 2021-12-01 la curva era plana (~1.500 casos/día) y el salto fue ~×20. Ningún modelo de ventana corta podía anticiparlo; el MAPE colapsa por los días de no-actualización tratados como huecos. <b>El desafío vivo del Comité lo confirma: la respuesta correcta es «el modelo dice esto; la alerta dice esto; comparemos con lo ocurrido».</b></div>
+<p><b>La alerta temprana sí anticipó ómicron:</b> indicador = variación semanal de la incidencia (MA7 hoy vs MA7 hace 7 días ≥ +30 %) e incidencia ≥ 6/100.000 hab. Evaluación en la historia de Chile (17 activaciones en ~3 años):</p>
+<ul>
+  <li><b>Las 5 olas fueron detectadas antes del pico</b>: 2020-06-17 (alerta 2020-05-06, 42 días), 2021-04-14 (2021-01-04, 100 días), <b>2022-02-13 ómicron (2021-11-11, 94 días)</b>, 2022-06-17 (2022-05-09, 39 días), 2022-11-10 (2022-09-23, 48 días). <b>Mediana 48 días.</b></li>
+  <li><b>1 falsa alarma estricta</b> (2020-07-26). Dos alzas menores sin ola mayor asociada (2021-10-17, +108 % en 42 días; 2023-02-25, +49 %). Cero activaciones «tarde».</li>
+  <li>Ómicron: primera señal 2021-11-11 (94 días antes), segunda 2022-01-04 (40 días antes). <b>La alerta —no el modelo puntual— fue el instrumento útil.</b></li>
+</ul>
+<img class="figura" src="../reports/fig_p6_pronostico.png" alt="Pronóstico pre-ómicron">
+<div class="caption"><b>Figura 13.1</b> — Pronóstico con corte 2021-12-01 (horizonte 45 días) vs realidad: la ola no era extrapolable; la alerta sí la vio venir.</div>
+
+<h2 id="p7">14. P7 — Vacunación y mortalidad reportada en las ocho semanas siguientes</h2>
+<p><b>Pregunta (propia del equipo):</b> ¿cómo se relaciona la cobertura de vacunación con la mortalidad reportada en las ocho semanas siguientes? <b>Países:</b> Chile, Perú, EE.UU. y Brasil. <b>Método:</b> serie semanal de fallecidos/100.000 (JHU; ≥0; días de corrección excluidos); cobertura semanal de vacunación completa (OWID, cruce ISO3, 201/218 países de <code>v_nacional_acum</code> cruzan); correlación Spearman cobertura(t) vs fallecidos(t+lag), lag 0–8 semanas; y comparación antes/después del 50 % de cobertura. <b>Es una asociación ecológica: no prueba causalidad.</b></p>
+<img class="figura" src="../reports/fig_p7_vacunacion.png" alt="Vacunación vs mortalidad">
+<div class="caption"><b>Figura 14.1</b> — Cobertura de vacunación completa vs fallecidos/100.000 cuatro semanas después.</div>
+
+<table>
+<thead><tr><th>País</th><th>Fall./100k/sem antes 50 %</th><th>después 50 %</th><th>Spearman global (lag 8)</th><th>Spearman era ≥50 % (lag 4)</th></tr></thead>
+<tbody>
+<tr><td>Chile</td><td>2,33</td><td>1,25</td><td>−0,583</td><td>−0,250</td></tr>
+<tr><td>Perú</td><td>6,84</td><td>0,84</td><td>−0,853</td><td>−0,502</td></tr>
+<tr><td>EE.UU.</td><td>2,40</td><td>1,81</td><td>−0,533</td><td>−0,717</td></tr>
+<tr><td>Brasil</td><td>3,12</td><td>0,62</td><td>−0,706</td><td>−0,610</td></tr>
+</tbody>
+</table>
+
+<p><b>Lectura:</b> en los cuatro países la mortalidad fue menor tras superar el 50 % de vacunación y la correlación es negativa en todos los lags. Pero tres advertencias son obligatorias: (1) la correlación global se <b>intensifica</b> con el lag — huella de tendencia compartida (cobertura sube, mortalidad baja), no necesariamente efecto del lag causal; (2) <b>ómicron rompió la asociación bivariada</b>: la mortalidad repuntó con cobertura altísima; (3) en la «era ≥50 %» la asociación se <b>atenúa en Chile</b> (−0,34 a −0,15, techo cercano al 90 % de vacunación) y se mantiene fuerte en Perú, EE.UU. y Brasil. <b>Chile vacunó temprano y rápido; su curva de mortalidad respondió, pero la señal dentro de la era de alta cobertura es débil — el beneficio marginal ya estaba capturado y waning/ómicron la empujaron.</b> Conclusión: la vacunación se asocia ecológicamente con menor mortalidad reportada en las semanas siguientes; el tamaño y la independencia del efecto no pueden afirmarse sin control de confusores (fase de ola, testeo, variantes) que este diseño no alcanza.</p>
+
+<h2 id="r6">15. R6 — Protección de datos y ética</h2>
+<h3>15.1 ¿Son datos personales?</h3>
+<p>Los datos de JHU son <b>agregados por territorio y día</b>: no contienen nombres, RUN, ni filas por persona; su unidad no es el individuo. En el marco de la <b>Ley 19.628</b> (protección de la vida privada) y su reemplazo por la <b>Ley 21.719</b> (2024, en vigor plena en 2027 en Chile), un dato agregado no es, por sí mismo, dato personal: nadie identificable aparece en ninguna celda. <b>Pero</b>: (i) cuando una celda pequeña (territorio con poca población y pocos casos) permite <b>re-identificar por eliminación</b> (familias/hogares de comunidades pequeñas), el agregado <b>se acerca al dato personal</b> y las leyes protegen su tratamiento; (ii) las coordenadas y la población por condado/comuna son datos de contexto que pueden usarse para cruzar con otras fuentes y segmentar; (iii) la calidad del agregado puede dañar si se usa para decisiones que afectan a personas (p. ej., negar atención por un indicador malo).</p>
+<h3>15.2 Controles aplicados</h3>
+<ul>
+  <li><b>Supresión de conteos 1–4</b> («&lt;5») en el tablero: los conteos individuales se muestran como «&lt;5»; detalle regional/condal suprimido donde corresponde. Los <b>317 condados de EE.UU. con menos de 5.000 habitantes</b> no aportan tablas de detalle (verificado en el DW: 317 condados &lt;5.000; 322 territorios en total).</li>
+  <li><b>Todo lo publicado es agregado</b>; no hay microdatos, ni archivos por comuna con casos nominales; el repositorio no contiene PII.</li>
+  <li><b>Advertencias visibles de interpretación:</b> fecha de corte, correcciones marcadas, letalidad aparente vs testeo, comparación internacional con cautela, y banner de «asociación ≠ causalidad».</li>
+  <li><b>La supresión no borra datos del DW</b>: es un control de divulgación en la presentación, no una censura del análisis.</li>
+  <li><b>Uso responsable de IA generativa</b> declarado en <code>contribuciones.md</code>; ningún dato personal se compartió con herramientas externas.</li>
+</ul>
+<h3>15.3 Advertencias de interpretación (requisitos)</h3>
+<ul>
+  <li><b>Letalidad aparente depende del testeo:</b> más testeo → más casos leves detectados → CFR aparente menor. Comparar la CFR entre países o en el tiempo sin controlar testeo induce conclusiones falsas. Se reporta <b>fallecidos/100.000</b> como medida principal.</li>
+  <li><b>Comparaciones internacionales:</b> definición de muerte COVID, cobertura de vacunación, olas asincrónicas, calidad del registro (índice §6) y granularidad (país vs condado). Usar siempre la advertencia del tablero.</li>
+  <li><b>Perú y Reino Unido</b> requieren contexto siempre (correcciones masivas del registro).</li>
+</ul>
+
+<h2 id="r7">16. R7 — Tablero y desafío en vivo</h2>
+<p>Tablero en <b>Streamlit</b> (<code>dashboard/app.py</code>; datos leídos del DW con DuckDB; sin dependencias de pago). Filtros globales: <b>territorio</b> (país del mundo o región de Chile) y <b>fecha de corte</b> (≤ 2023-03-09, todo lo mostrado usa solo datos hasta esa fecha). KPIs: casos acumulados, fallecidos, tasa por 100.000, letalidad aparente con tooltip de cautela. Tendencia MA7 con doble eje. Ranking con supresión 1–4. <b>Mapa georreferenciado mundial</b> (burbujas, color por incidencia/100k) y <b>mapa regional de Chile</b>. <b>Alerta temprana</b> con umbral visible (±30 % semanal; piso 6/100k). <b>Fecha de corte y advertencias de calidad</b> visibles en cada vista. Pestaña «Desafío en vivo»: ejecuta <code>pronosticar(territorio, fecha_corte, 14)</code> y muestra el estado de la alerta a la fecha elegida — exactamente lo que el Comité pide en la sesión en vivo.</p>
+<img class="figura" src="../dashboard/capturas/tablero_chile.png" alt="Tablero Chile">
+<div class="caption"><b>Figura 16.1</b> — Vista Chile del tablero (KPIs al 2023-03-09 + MA7).</div>
+<img class="figura" src="../dashboard/capturas/tablero_mundo.png" alt="Mapa mundial">
+<div class="caption"><b>Figura 16.2</b> — Mapa mundial de burbujas (incidencia del período).</div>
+<img class="figura" src="../dashboard/capturas/tablero_desafio.png" alt="Desafío en vivo">
+<div class="caption"><b>Figura 16.3</b> — Desafío en vivo: alerta INACTIVA al corte 2023-03-09 y pronóstico Holt a 14 días.</div>
+<p><small>Capturas adicionales en <code>dashboard/capturas/</code>. El tablero es local (<code>streamlit run dashboard/app.py</code>); el archivo del tablero y las capturas acompañan a la entrega.</small></p>
+
+<h2 id="recomendaciones">17. Tres recomendaciones con evidencia (para la próxima pandemia)</h2>
+
+<div class="nota"><b>R1. Montar la plataforma de datos y sus reglas desde el día 1 — no después de la primera ola.</b><br>
+<b>Evidencia:</b> los tres años de pandemia muestran que el cuello de botella no fue el virus sino los datos: 1.143 reportes con <b>cinco esquemas distintos</b>, 44.587 retrocesos del acumulado (1.097.163 casos retirados solo el 2022-05-23), 7 filas imposibles (acumulados negativos) y la discontinuidad de recuperados/activos desde 2021-03 que dejó media serie muerta. Aun así, una cadena automatizada reconstruyó todo el registro en minutos, con sus errores <b>marcados</b>.<br>
+<b>Recomendación:</b> al declararse la emergencia, desplegar en la semana 1: (i) ingesta automatizada con validación de esquema en cada carga; (ii) capa limpia con linaje a archivo y fila; (iii) DW con grano declarado (territorio×día); (iv) reglas de calidad ejecutadas en cada carga con umbral/estado/decisión; (v) índice de confiabilidad por territorio <b>publicado</b>.<br>
+<b>Indicador:</b> % de días con datos consolidados y calidad anotada disponibles &lt;24 h (objetivo ≥ 99 %); % de anomalías marcadas automáticamente (objetivo ≥ 95 %).<br>
+<b>Responsable:</b> subsecretaría/unidad de datos de salud (o equivalente), con auditoría externa anual.</div>
+
+<div class="nota"><b>R2. Operar una alerta temprana — y exigir su evaluación histórica antes de confiar en ella.</b><br>
+<b>Evidencia:</b> en la historia de Chile la alerta (variación semanal MA7 ≥ +30 % e incidencia ≥ 6/100.000) detectó <b>las 5 olas con 39–100 días de anticipación</b> (mediana 48) y solo 1 falsa alarma; el modelo puntual (14 días) no anticipa los saltos de ómicron (MAPE 25,7 % en el mejor corte), pero la alerta sí encendió el 2021-11-11, <b>94 días antes</b> del pico de ómicron.<br>
+<b>Recomendación:</b> institutionalizar la alerta semanal por región (variación MA7 + umbral visible), revisada cada semana por la autoridad sanitaria y publicada con su desempeño histórico (anticipación por ola, falsas alarmas) en el tablero público. Prohibir su «calibración a ojo»: toda modificación del umbral debe re-evaluarse sobre la historia antes de adoptarse.<br>
+<b>Indicador:</b> % de olas detectadas con ≥14 días de anticipación (objetivo 100 %); falsas alarmas por trimestre (objetivo &lt; 2); tiempo medio desde señal hasta decisión pública (objetivo ≤ 7 días).<br>
+<b>Responsable:</b> unidad de inteligencia epidemiológica MINSAL/equivalentes regionales, con protocolo escrito y publicación de cada evaluación.</div>
+
+<div class="nota"><b>R3. Publicar el tablero de decisión con calidad visible y supresión 1–4 — transparencia que cuida.</b><br>
+<b>Evidencia:</b> el índice de confiabilidad por país separa datos útiles de datos ruidosos (USA 34,0 vs URY 100,0); el 91 % de las filas empatan sin ambigüedad con la tabla UID, pero 169 territorios quedan sin correspondencia y el awt de Perú (~100.000 fallecidos añadidos en 2021) y Reino Unido (jun-2020) <b>habrían distorsionado cualquier letalidad oficial sin advertencia</b>. La supresión de conteos 1–4 protege a los 317 condados de EE.UU. con &lt;5.000 habitantes (y a comunas chilenas pequeñas) sin dañar la utilidad agregada.<br>
+<b>Recomendación:</b> tablero oficial único con: KPIs por 100.000 (no totales crudos), fecha de corte, advertencias de calidad por país, supresión de 1–4, mapa georreferenciado y CFR acompañado siempre de su contexto de testeo. Publicar también el «por qué no usar este número» cuando un dato no es comparable.<br>
+<b>Indicador:</b> % de cifras publicadas con nota de método/corte visibles (objetivo 100 %); % de celdas pequeñas suprimidas (objetivo 100 %); consultas por mes al portal (adopción) y tiempo medio de corrección publicada tras detectar un error (objetivo ≤ 72 h).<br>
+<b>Responsable:</b> comunicaciones y datos de la autoridad sanitaria, con revisión del Consejo Asesor.</div>
+
+<h2 id="limitaciones">18. Limitaciones y trabajo futuro</h2>
+<ul>
+  <li><b>Correcciones no reversibles:</b> los retrocesos/inserts se conservan marcados; para series comparables en el tiempo se excluyen de promedios (nunca silenciosamente). Las series de cotejo confirman la integridad del total final (Δ = 0); los picos puntuales siguen siendo visibles por diseño.</li>
+  <li><b>Sin datos posteriores al 2023-03-09</b> (JHU archivado): el "después" del corte en el desafío es exactamente lo que ocurrió; no hay información posterior que filtrar.</li>
+  <li><b>OWID vacunación</b> tiene lag y dependencia del reporte nacional; Kosovo queda fuera (publica como <code>OWID_KOS</code>); territorios-región no tienen serie nacional de vacunación.</li>
+  <li><b>Definición de muerte/caso difiere</b> entre países y cambió en el tiempo; por eso se prefiere mortalidad por 100.000 y se reportan los índices de calidad lado a lado.</li>
+  <li><b>Segmentación:</b> la forma pura de curva es homogénea globalmente; los grupos quedan definidos por indicadores con silueta moderada (0,33) — útiles como tipología, no como verdad definitiva.</li>
+  <li><b>Trabajo futuro:</b> incorporar Oxford Gov Response Tracker (restricciones) como segunda fuente; linaje a nivel de fila en el tablero; despliegue del DW en la nube (costo estimado §3); alertas en edición semanal automatizada; extensión de P7 con control de confusores (variantes, testeo) y regresión multivariada.</li>
+</ul>
+
+<h2 id="reproducibilidad">19. Reproducibilidad</h2>
+<p>Desde un clon limpio, en Windows (PowerShell), con Python ≥ 3.10:</p>
+<pre>git clone &lt;URL&gt; sala-de-crisis-covid19
+cd sala-de-crisis-covid19
+py -m venv .venv ; .\.venv\Scripts\Activate.ps1
+py -m pip install -r requirements.txt
+python src/descargar_reportes.py            # 1.143 reportes + series + UID + OWID (~600 MB)
+python src/ingesta.py                        # capa limpia Parquet + medición
+python src/territorios.py                    # identidad territorial (tabla)
+python src/construir_dw.py                   # DW DuckDB estrella + controles
+python src/calidad.py                        # reglas 6 dimensiones + índice por país
+python src/consultas_olap.py                 # OLAP de verificación
+python src/analisis_p1_p6.py                 # P1–P6 + figuras
+python src/p7_vacunacion.py                  # P7 (cruce OWID ISO3)
+python -m streamlit run dashboard/app.py     # tablero en http://localhost:8501</pre>
+<p>Todo fue ejecutado y verificado con estas mismas órdenes; el tiempo total de principio a fin es &lt; 15 minutos (la descarga domina). Los datos crudos y el DW no se versionan (se regeneran); informes, diccionario y tablero sí.</p>
+
+<h2 id="referencias">20. Referencias</h2>
+<ol class="refs">
+  <li>Johns Hopkins University CSSE. <i>COVID-19 Data Repository</i>. <a href="https://github.com/CSSEGISandData/COVID-19">github.com/CSSEGISandData/COVID-19</a> (archivado el 2023-03-10).</li>
+  <li>Johns Hopkins University CSSE. <i>UID_ISO_FIPS_LookUp_Table.csv</i> (territorios, población, coordenadas).</li>
+  <li>Our World in Data. <i>COVID-19 vaccinations</i>. <a href="https://github.com/owid/covid-19-data">github.com/owid/covid-19-data</a> (<code>public/data/vaccinations</code>), consultado 2026-11.</li>
+  <li>Ministerio de Salud de Chile. <i>Informe epidemiológico COVID-19</i> y notas de revisión del registro de fallecidos (2021–2022).</li>
+  <li>Ley N° 19.628 sobre Protección de la Vida Privada (Chile, 1999) y Ley N° 21.719 que la sustituye (2024).</li>
+  <li>JHU CSSE — <i>Announcing the COVID-19 dashboard archive</i> y notas de calidad de datos (cambios de esquema; corrección masiva de 2022-05).</li>
+  <li>Proyecto semestral — enunciado <i>Sala de crisis COVID-19</i> (IN1232C, 2026-2) y ROADMAP del equipo.</li>
+</ol>
+
+<p class="footer-note">Informe generado el 4-nov-2026 a partir de los artefactos reproducibles del repositorio (DW <code>data/dw/covid.duckdb</code>; capa limpia <code>data/clean/daily_reports.parquet</code>; figuras en <code>reports/</code>; tablero en <code>dashboard/</code>). Ninguna cifra fue tecleada a mano: todas provienen de consultas ejecutadas y quedan en los informes de validación y en las figuras citadas.</p>
+
+</body>
+</html>
+
+

@@ -1,0 +1,16 @@
+# Datos originales: se descargan con el código y no se versionan.
+data/raw/
+
+# Capa limpia y DW generados: se regeneran desde los crudos.
+data/clean/
+data/dw/
+
+# Resultados y artefactos generados localmente.
+reports/
+
+# Python y Jupyter.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/

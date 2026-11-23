@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe al Comité — Sala de crisis COVID-19</title>
+<style>
+@page {
+  size: A4;
+  margin: 11mm 12mm;
+  @bottom-center { content: "Informe al Comité — 4-nov-2026"; font-size: 7.5pt; color: #9a93a8; }
+  @bottom-right  { content: "p. " counter(page) " / " counter(pages); font-size: 7.5pt; color: #9a93a8; }
+}
+* { box-sizing: border-box; }
+body { font-family: Georgia, serif; font-size: 9.3pt; line-height: 1.3; color: #26232b; }
+h1, h2, h3 { font-family: "Segoe UI", Calibri, sans-serif; color: #2c1a4d; line-height: 1.25; }
+h1 { font-size: 19.5pt; margin: 0 0 1mm; }
+.kicker { font-family:"Segoe UI"; letter-spacing:2.5px; text-transform:uppercase; font-size:7pt; color:#6d28d9; margin:0 0 2mm; }
+.rule { height: 3px; background: linear-gradient(90deg,#6d28d9,#b3543f); border: none; margin: 3mm 0; }
+h2 { font-size: 12.5pt; border-bottom: 2px solid #6d28d9; padding-bottom: 1.2mm; margin-top: 4mm; color:#44266e; }
+h3 { font-size: 9pt; color:#5b3a99; margin: 3mm 0 1mm; text-transform: uppercase; letter-spacing:.6px; font-size:8pt; }
+p { margin: 2mm 0; text-align: justify; }
+.nums { display:flex; gap:5px; margin: 3mm 0; font-family:"Segoe UI"; }
+.num { flex:1; background:#f5f2fb; border-radius:5px; padding:4px 6px; text-align:center; }
+.num b { display:block; font-size:15pt; color:#4a2c7a; }
+.num span { font-size:6.4pt; text-transform:uppercase; letter-spacing:.5px; color:#6b6770; }
+table { width:100%; border-collapse:collapse; font-size:7.6pt; font-family:"Segoe UI"; margin: 3mm 0; }
+th { background:#2c1a4d; color:#fff; padding:2.5px 5px; text-align:left; font-size:6.8pt; }
+td { border-bottom: 1px solid #e6e2ee; padding:2.5px 5px; }
+tr:nth-child(even) td { background:#f8f7fc; }
+.rec { border-left: 4px solid #6d28d9; background:#fbfaff; padding: 2mm 3mm; margin: 2.5mm 0; border-radius:4px; }
+.rec b { color:#2c1a4d; }
+.kpi-tag { display:inline-block; background:#ede7fb; color:#44266e; font-family:"Segoe UI"; font-size:6.6pt; border-radius:10px; padding: 1px 8px; }
+.alerta { color:#b3543f; font-weight:bold; }
+ul { margin: 1.5mm 0; } li { margin-bottom: 1mm; }
+.footer { font-size:6.8pt; color:#8a8a8a; border-top:1px solid #eee; margin-top:4mm; padding-top:2mm; }
+.twocol { column-count: 2; column-gap: 5mm; }
+</style>
+</head>
+<body>
+
+<p class="kicker">IN1232C · Gestión de Datos · Informe ejecutivo</p>
+<h1>Sala de crisis COVID-19: qué aprendimos y qué haría distinto la próxima vez</h1>
+<hr class="rule">
+
+<p><b>Chile vivió la pandemia del grupo de países de «olas múltiples y alta letalidad aparente»</b> (segmento 0 de nuestra segmentación mundial, 54 países: América Latina, Europa del Este y EE.UU.). Fue el 2.º país de Sudamérica en incidencia acumulada (<b>27.162 casos por 100.000</b>, tras Uruguay) y 2.º en mortalidad aparente (<b>336,2 fallecidos por 100.000</b>, tras Perú con 665,8, cifra inflada por la reconciliación oficial de 2021). <b>Tuvo cinco olas; la más letal fue la primera</b> (310 fallecidos por día en julio 2020) <b>y la de mayor magnitud ómicron</b> (febrero 2022, ~35.700 casos/día, casi la mitad de todos los casos del país).</b></p>
+
+<div class="nums">
+  <div class="num"><b>5,19 M</b><span>casos acumulados</span></div>
+  <div class="num"><b>64.273</b><span>fallecidos</span></div>
+  <div class="num"><b>27.162</b><span>casos /100.000</span></div>
+  <div class="num"><b>336,2</b><span>fallecidos /100.000</span></div>
+</div>
+
+<h2>Qué dicen los datos (y qué no)</h2>
+
+<div class="twocol">
+<p><b>Los datos son útiles, pero vienen con asteriscos.</b> JHU publicó cinco esquemas distintos en 1.143 reportes diarios; JHU dejó de publicar recuperados y activos desde marzo 2021 (desde octubre, ~100 % ausentes). <b>El 23 de mayo de 2022 se retiraron 1.097.163 casos en una corrección global</b> (Chile −9.827); Chile además insertó +36.179 casos el 2020-06-17 y +1.057 fallecidos el 2020-07-17, y sumó +11.447 fallecidos en la revisión de registro del 2022-03-21. Nosotros <b>marcamos, no borramos ni imputamos</b>: los datos retroceden por correcciones y ese hecho es información.</p>
+<p><b>Chile aguanta la comparación — con matices.</b> Mejor que la media regional en detección y en velocidad de vacunación (Chile cruzó al 50 % de vacunación completa antes que Perú, EE.UU. y Brasil). Pero su mortalidad aparente supera a Argentina (288,7) y Colombia (279,7). La CFR aparente chilena cayó de 2,54 % (antes de vacunar) a 0,92 % (desde junio 2021) — baja real, pero amplificada por el masivo aumento de testeo.</p>
+<p><b>Ómicron no se podía predecir con el pasado inmediato.</b> Con corte al 2021-12-01, ningún modelo acertó los ~×20 de alza (error medio 25,7 %). La <b>alerta temprana</b> (variación semanal MA7 ≥ +30 % e incidencia ≥ 6/100.000) <b>sí la detectó 94 días antes del pico</b> (2021-11-11). Detectó las 5 olas con 39–100 días de anticipación y dio <b>una sola falsa alarma</b> en tres años.</p>
+</div>
+
+<h2>Qué habría permitido anticiparlo</h2>
+<p>No estadísticas más grandes ni modelos más sofisticados: <b>una alerta operativa y honesta, más datos limpios desde el día uno</b>. La cadena funciona: descarga → limpieza con linaje → DW en estrella → reglas de calidad en cada carga → tablero con fecha de corte y advertencias. Todo ello existe hoy, corre en minutos y quedó verificado extremo a extremo.</p>
+
+<table>
+<thead><tr><th>Pregunta que respondimos</th><th>Respuesta corta</th></tr></thead>
+<tbody>
+<tr><td>¿Cómo vivió Chile vs Sudamérica?</td><td>2.º en incidencia (27.162/100k) y mortalidad aparente (336/100k); Perú 1.º en mortalidad (666, inflada por corrección)</td></tr>
+<tr><td>¿Qué regiones golpearon más?</td><td>Magallanes 468 y Metropolitana 435 fall./100k; <b>Biobío, puesto 10/16</b> (310/100k). Ómicron arrasó en volumen (Metropolitana: 434.247 casos en 2021)</td></tr>
+<tr><td>¿Cambió la letalidad con la vacuna?</td><td>Sí (2,54 % → 0,92 %), amplificado por el testeo; prefiere mirarse fallecidos/100.000</td></tr>
+<tr><td>¿Qué tan confiables son los datos?</td><td>Índice propio: EE.UU. 34,0 (peor), Chile ~99; los datos malos se marcan, no se usan sin advertencia</td></tr>
+<tr><td>¿Quiénes tuvieron pandemias parecidas?</td><td>Chile está en el grupo «olas múltiples, alta CFR» (Am. Latina + E. Europa + EE.UU.); el resto del mundo convergió en el pico de ómicron</td></tr>
+<tr><td>¿Se podía anticipar ómicron?</td><td>No el número exacto, sí la ola: la alerta la vio 94 días antes. El modelo de 14 días, no</td></tr>
+<tr><td>¿Vacunación → menos muertes en 8 semanas?</td><td>Asociación ecológica negativa en Chile, Perú, EE.UU. y Brasil; no prueba causalidad; en Chile la señal se atenúa en la era ≥50 % (techo 90 %)</td></tr>
+</tbody>
+</table>
+
+<h2>Tres recomendaciones para la próxima pandemia</h2>
+
+<div class="rec"><b>R1 — Plataforma de datos auditada desde la semana 1, con reglas visibles.</b><br>
+Despliegue inmediato de ingesta + limpieza + DW + reglas de calidad ejecutadas en cada carga; índice de confiabilidad por territorio publicado. Las anomalías (retrocesos, negativos, artefactos) se marcan y se reportan, nunca se arreglan en silencio.<br>
+<span class="kpi-tag">Indicador: % días con datos consolidados &lt; 24 h — meta ≥ 99 %</span> <span class="kpi-tag">Responsable: unidad de datos de salud + auditoría externa anual</span></div>
+
+<div class="rec"><b>R2 — Alerta temprana oficial, evaluada contra la historia antes de confiar en ella.</b><br>
+Variación semanal MA7 ≥ +30 % e incidencia ≥ 6/100.000, por región, revisada semanalmente y publicada con su historial (anticipación por ola y falsas alarmas). Cualquier cambio de umbral debe re-probarse sobre los tres años de historia.<br>
+<span class="kpi-tag">Indicador: % olas detectadas con ≥ 14 días de anticipación — meta 100 %</span> <span class="kpi-tag">Falsas alarmas &lt; 2 por trimestre</span> <span class="kpi-tag">Responsable: inteligencia epidemiológica MINSAL</span></div>
+
+<div class="rec"><b>R3 — Un tablero público con calidad visible y supresión 1–4.</b><br>
+Las cifras deben venir con fecha de corte, advertencias de calidad por país y supresión de conteos 1–4 (protege a comunas/condados pequeños, p. ej. los 317 condados de EE.UU. con &lt; 5.000 hab.). Se publica por 100.000, no en crudo; la CFR siempre con su contexto de testeo; los datos malos vienen con la etiqueta «no comparar sin contexto».<br>
+<span class="kpi-tag">Indicador: % cifras con método/corte visibles — meta 100 %</span> <span class="kpi-tag">Responsable: comunicaciones + datos + Consejo Asesor</span></div>
+
+<h2>El tablero, en una línea</h2>
+<p>Filtra por país o región de Chile y por fecha; muestra KPIs por 100.000, mapa mundial y regional, ranking con «&lt;5» donde corresponde, fecha de corte y advertencias — y en la pestaña «Desafío en vivo» ejecuta en vivo <code>pronosticar(territorio, fecha_corte, 14)</code> y el estado de la alerta para el escenario que el Comité sortee.</p>
+
+<p class="footer">Informe ejecutivo sin código. Evidencia completa, figuras, diccionario de datos, reglas ejecutadas y límite de cada cifra: <i>Informe Técnico de la Sala de crisis COVID-19</i> (este mismo repositorio). Fuentes: JHU CSSE (archivo histórico) y Our World in Data (vacunación, cruce ISO3). Ninguna cifra fue tecleada a mano; todas provienen del DW reproducible del proyecto.</p>
+
+</body>
+</html>
