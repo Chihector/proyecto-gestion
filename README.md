@@ -64,7 +64,7 @@ El descargador obtiene JHU, vacunación OWID y el panel OxCGRT; los archivos exi
 
 ## Presentación al Comité (sesión 24-nov)
 
-`PPT_Comite_Sala_de_Crisis.pptx`: relato de 15 diapositivas construido sobre `Plantilla PPT Institucional.pptx`, con las cifras y gráficos reales del proyecto (`reports/`) y capturas del tablero (`dashboard/capturas/`). Las diapositivas son visuales (KPIs, gráficos, mapas) y el relato de 7 minutos está en las **notas del exponente** de cada lámina: cadena de datos, P1–P7, extra OxCGRT, tablero en vivo, desafío con `pronosticar(territorio, fecha_corte, 14)` y tres recomendaciones con indicador y responsable.
+`PPT_Comite_Sala_de_Crisis.pptx`: relato de 18 diapositivas construido sobre `Plantilla PPT Institucional.pptx`, con las cifras y gráficos reales del proyecto (`reports/`) y capturas del tablero (`dashboard/capturas/`). Las diapositivas son visuales (KPIs, gráficos, mapas) y el relato de 7 minutos está en las **notas del exponente** de cada lámina: cadena de datos, P1–P7, extra OxCGRT, tablero en vivo, desafío con `pronosticar(territorio, fecha_corte, 14)` y tres recomendaciones con indicador y responsable.
 
 Para regenerarla (requiere `python-pptx` y `Pillow`):
 
@@ -139,7 +139,7 @@ El roadmap vigente, el diccionario y las lecciones están en [`ROADMAP.md`](ROAD
 | R7 Tablero (mapa mundial y de Chile, alerta, «Desafío en vivo») | ✔ completo |
 | R8 Informes (técnico 14 pp · Comité 2 pp) y `contribuciones.md` | ✔ completo (nombres pendientes) |
 | Notebooks (`Hito 1`, `Hito 2`, `Hito 3` y `proyecto completo`) | ✔ completos, en español y ejecutados sin errores |
-| Presentación del Comité (15 láminas + notas, plantilla UCSC) | ✔ completa (nombres en portada pendientes) |
+| Presentación del Comité (18 láminas + notas, plantilla UCSC) | ✔ completa (nombres en portada pendientes) |
 | `Proyecto_Sala_de_Crisis_2026-2.rar` (entrega ligera, sin crudos) | ✔ generado |
 
 Detalle de avance, hitos y pendientes: [`ROADMAP.md`](ROADMAP.md). Errores encontrados y corregidos durante la construcción (bug de `pais_iso3` que excluía las series nacionales, artefacto chileno del 2020-06-17, inferencia de país por moda): documentados en `ROADMAP.md` y `docs/diccionario_datos.md`.

@@ -24,9 +24,9 @@
 ### 1.2 Las tres capas (esto es lo que hace que sea "reproducible")
 
 ```text
-data/raw/    651 MB  crudo tal cual, NO versionado; se regenera con src/descargar_reportes.py
-data/clean/  111 MB  capa limpia Parquet: daily_reports.parquet (4.287.473 filas x 17 cols)
-data/dw/     212 MB  almacén en estrella DuckDB: covid.duckdb
+data/raw/    (crudo tal cual, NO versionado; se regenera con src/descargar_reportes.py — excluido de entrega)
+data/clean/  capa limpia Parquet: daily_reports.parquet (4.287.473 filas x 17 cols)
+data/dw/     almacén en estrella DuckDB: covid.duckdb
 ```
 
 El **DW en estrella** declara su grano (territorio × día):

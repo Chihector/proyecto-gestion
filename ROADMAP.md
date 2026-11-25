@@ -8,7 +8,9 @@ La exploración de enero a junio de 2020 es solo el punto de partida. El grueso 
 
 ## Avance actual
 
-- **Estado al 4-nov-2026:** Hito 2 (plataforma) **completo**; Hito 3 (análisis y tablero) **completo salvo el ensayo**; falta el Comité (24-nov) y la entrega (25-nov). Todo es reproducible con el README.
+- **Estado al 25-nov-2026:** **Hito 1 (10-nov), Hito 2 (17-nov), Hito 3 (18-nov) — todos completos.** Pipeline validado el 25-nov (ejecutado del inicio al fin, salida 0 en los 10 pasos); DW verificado en vivo (`data/dw/covid.duckdb`: `fact_covid` 4.287.374, `dim_fecha` 1.143, `dim_territorio` 4.284). Se ejecutó `pronosticar('CHL','2021-12-01',14)` y `alerta('CHL','2021-12-01')` sin fuga de datos. Tablero verificado en navegador (http://localhost:8501, 0 errores).
+- **Presentación para el Comité — 18 diapositivas** (`PPT_Comite_Sala_de_Crisis.pptx`, commits `1ac3d43` y `f8880b0`): relato y hallazgos (P1–P7), demostración del tablero en vivo y ejecución de código/pronóstico.
+- **R1 Ingesta y arquitectura — completo** (verificationes 25-nov).
 - **R1 Ingesta y arquitectura — completo.** Descarga automatizada (1.143 reportes + 5 series + UID + OWID + OxCGRT; reutiliza lo descargado; errores explícitos y código 1); tres capas; Parquet 109 MB vs 587 MB (18,6 %), lectura 2,63 s vs 21,58 s (8,2×); DuckDB justificado (vs SQLite/Postgres/NoSQL); equivalente en la nube con estimación (~US$35–50/mes).
 - Capa limpia (`data/clean/daily_reports.parquet`, 4.287.473 × 17 cols) y `etapa_esquema` detectada por columnas crudas (etapa_1 hasta 2020-02-29 · etapa_2 03-01→03-21 · etapa_3 03-22→05-28 · etapa_4 05-29→11-08 · etapa_5 desde 2020-11-09, renombra Incident_Rate/Case_Fatality_Ratio). `recovered`/`active` nulos en 66 % (JHU discontinuó desde 2021-03; ~100 % desde 2021-10). Ningún archivo quedó con esquema desconocido; cotejo series↔reportes al cierre: Δ=0 (676.570.149 exacto).
 - **Identidad territorial resuelta** (`src/territorios.py`): 4.410 claves crudas → **4.284 territorios canónicos**; **99,95 % de las filas empatan con la UID** (99,90 % con iso3); Chile pasa a reporte regional el **2020-05-20**; alias documentados (erratas JHU, censos EE.UU., territorios bajo país administrador); especiales (barcos/eventos) marcados; linaje `clave_raw`+`fecha` → archivo y fila.
@@ -23,7 +25,7 @@ La exploración de enero a junio de 2020 es solo el punto de partida. El grueso 
 - La P7 quedó adoptada: vacunación vs mortalidad a 8 semanas (CHL/PER/USA/BRA; asociación ecológica; 50 % umbral: CHL 2,33→1,25; PER 6,84→0,84; USA 2,40→1,81; BRA 3,12→0,62 fall./100k/sem).
 - **Extra OxCGRT — integrado y analizado** (`src/analisis_restricciones.py`): índice de respuesta política «de jure» frente a casos JHU para Chile, Perú, EE.UU. y Brasil; salida `reports/hallazgos_restricciones.md` + figura. Asociación descriptiva, no causal; OxCGRT cierra 68 días antes que JHU.
 - `requirements.txt`: pandas, pyarrow, duckdb, statsmodels, scikit-learn, matplotlib, plotly, streamlit, jupyterlab, ydata-profiling. `.venv` validado en Windows.
-- La carpeta aún no está conectada a un remoto GitHub; no asumir remoto ni publicar/commit sin autorización.
+- El repositorio está conectado a un remoto GitHub: `origin → https://github.com/Chihector/proyecto-gestion.git`. Commits fueron hechos con autorización; el push a `main` también está verificado (3 commits push).
 
 ### Pendiente inmediato (quién continúe)
 
@@ -55,7 +57,7 @@ La exploración de enero a junio de 2020 es solo el punto de partida. El grueso 
 
 - **Guía de lectura rápida:** `docs/guia_proyecto.md` resume qué es el proyecto, qué se hizo en el Hito 1 (tarea por tarea) y qué sigue (pendientes con fecha y responsable).
 - **Notebooks del proyecto** (`notebooks/`): `Hito 1.ipynb` (exploración de ene–jun 2020), `Hito 2.ipynb` (plataforma: ingesta, identidad territorial, DW, calidad, fuentes externas y OLAP), `Hito 3.ipynb` (P1–P7, modelos, alerta, P7, OxCGRT y desafío en vivo) y `proyecto completo.ipynb` (los tres hitos juntos, 60 celdas). Los cuatro están **en español, con tablas y gráficos rotulados en español, ejecutados de principio a fin sin errores** y con una tabla de verificación por hito (Hito 2: 8/8 OK; Hito 3: 11/11 OK).
-**Estado de hitos (4-nov):** Hito 1 ✔ · Hito 2 ✔ (adelantado al 4-nov) · Hito 3 ✔ salvo ensayo (18-nov) · Comité 24-nov · entrega 25-nov.
+**Estado de hitos (25-nov):** Hito 1 ✔ · Hito 2 ✔ · Hito 3 ✔ · Comité 24-nov · entrega 25-nov (pending de confirmar nota final).
 
 ## Secuencia técnica
 
