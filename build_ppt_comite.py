@@ -402,8 +402,73 @@ notes(s, """
 RECOMENDACIONES (≈60 s, el cierre del relato). No son genéricas: cada una sale de un resultado del proyecto y trae indicador y responsable. R1: la cadena auditada desde el día uno, con reglas visibles y anomalías marcadas, medida como porcentaje de días consolidados en menos de 24 horas. R2: una alerta oficial probada contra los tres años de historia antes de confiar en ella, con metas de anticipación y falsas alarmas, a cargo de inteligencia epidemiológica. R3: un tablero público que muestre la fecha de corte, las advertencias de calidad y la supresión de celdas pequeñas para proteger a comunas y condados; el cien por cien de las cifras debe llevar método y corte visibles.
 """)
 
-# ----------------------------------------------------------- 15 · cierre --
-s = base("Preguntas", "Todos podemos explicar y ejecutar cualquier parte del proyecto", "CIERRE", 15)
+# --------------------------------------------------- 15 · relato ----------
+s = base("Relato y hallazgos: respuestas P1–P7",
+         "Qué respondimos al Comité, con números del proyecto", "RELATO", 15)
+hallazgos = [
+    ("P1+P2 · Chile/Sudamérica y regiones",
+     "Chile 2.º Sudamérica: 27.162 casos/100k (tras Uruguay). 5 olas, primera la más letal (310 fall./día MA7, 2020-07-23). Regiones: Magallanes 467,8 · Metropolitana 2.ª (434,8) · Biobío 10/16 (310,1/100k). Mapa con Lat/Lon de la tabla UID."),
+    ("P3+P4 · Letalidad y confiabilidad",
+     "Chile: 2,54 % → 0,92 % CFR desde junio 2021 (baja real amplificada por testeo). Índice de calidad por país; peores: USA 34,0 (54.746 retrocesos). Decisiones: marcar retrocesos, excluir días de corrección de medias/modelos."),
+    ("P5+P6 · Segmentación y ómicron",
+     "KMeans k=3 (silueta 0,325); Chile en grupo 0. Ómicron: MAPE 25,69 % en corte 2021-12-01; alerta detectó ola 94 días antes (2021-11-11)."),
+    ("P7 · Vacunación a 8 semanas",
+     "CHL 2,33 → 1,25 · PER 6,84 → 0,84 · USA 2,40 → 1,81 · BRA 3,12 → 0,62 fall./100k/sem (asociación ecológica, sin causalidad)."),
+]
+y = 1.9
+for head, body in hallazgos:
+    rect(s, 0.56, y, 0.06, 0.55, RED)
+    textbox(s, 0.70, y + 0.06, 11.1, 0.32, head, 11, RED, True)
+    textbox(s, 0.70, y + 0.42, 11.1, 0.9, body, 9, DARK)
+    y += 1.02
+notes(s, """
+RELATO Y HALLAZGOS (≈40 s). Cubre los hallazgos de reports/hallazgos_p1_p6.md: Chile es 2.º en incidencia (27.162/100k, tras Uruguay) y 2.º en mortalidad (336,2); tuvo 5 olas, más letal la primera. Regiones: Magallanes lidera (467,8/100k), Metropolitana 2.ª (434,8), Biobío 10/16 (310,1). Letalidad Chile: 2,54 % antes de vacunación → 0,92 % desde junio 2021. Índice de calidad por país, peor USA 34,0 (10.777 se marcan). Segmentación: Chile en grupo 0. Ómicron: no extrapolable (MAPE 25,69 % en corte 2021-12-01); la alerta la detectó 94 días antes del pico. P7: vacunación vs mortalidad a 8 semanas sin causalidad.
+""")
+
+# ------------------------------------------------ 16 · tablero en vivo ----
+s = base("Demostración del tablero en vivo",
+         "Dashboard Streamlit en localhost:8501 — verificado con navegador: 0 errores, 0 peticiones fallidas", "TABLERO", 16)
+image_fit(s, ROOT / "dashboard/capturas/tablero_mundo.png", 0.56, 1.9, 5.95, 3.9)
+image_fit(s, ROOT / "dashboard/capturas/tablero_chile.png", 6.81, 1.9, 5.95, 3.9)
+rect(s, 0.56, 6.0, 6.2, 0.7, LIGHT, LINE, rounded=True)
+rect(s, 6.81, 6.0, 5.95, 0.7, LIGHT, LINE, rounded=True)
+textbox(s, 0.75, 6.1, 5.8, 0.32, "Mapa mundial", 10, RED, True)
+textbox(s, 0.75, 6.4, 5.8, 0.28, "Mapa regional de Chile", 10, RED, True)
+textbox(s, 0.75, 6.7, 5.8, 0.28, "Filtros: Territorio + Fecha de corte", 9.5, GRAY)
+rect(s, 6.81 + 0.04, 6.0, 5.8, 0.28, LIGHT, LINE, rounded=True)
+textbox(s, 7.0, 6.1, 5.6, 0.32, "Alerta y advertencias", 10, RED, True)
+notes(s, """
+DEMOTE DEL TABLER. Iniciamos: '.venv\Scripts\python.exe -m streamlit run dashboard\app.py --server.port 8501 --server.headless true'. El servidor responde HTTP 200. Verificado en navegador sin errores. Pestañas: 'Chile y regiones', 'Mundo', 'Desafío en vivo', 'Calidad y advertencias'. Filtros: select 'Territorio' (país o región de Chile), 'Fecha de corte' (default 2023-03-09), control de alerta (radio 0/1). KPIs por 100.000 con media móvil 7 días. Mapa mundial y mapa regional de Chile (GeoJSON del Wordpress UID). Supresión de conteos 1–4 (R6) aplicada y visible. Pestaña 'Desafío en vivo' ejecuta pronosticar(territorio, fecha_corte, 14).
+""")
+
+# --------------------------------------------- 17 · ejecución de código ----
+s = base("Ejecución de código: alerta() y pronosticar(CHL, 2021-12-01, 14)",
+         "Caso de prueba Chile, fecha de corte antes de ómicron, sin fuga de datos", "CÓDIGO", 17)
+textbox(s, 0.56, 1.9, 12.2, 0.4,
+        "from modelos import pronosticar, alerta, serie_diaria", 9, DARK)
+textbox(s, 0.56, 2.4, 12.2, 0.28,
+        "s = serie_diaria('CHL', hasta='2021-12-01')\n# serie termina 2021-12-01 → sin fuga de datos", 9, DARK)
+textbox(s, 0.56, 2.8, 12.2, 0.28,
+        "fc = pronosticar('CHL', '2021-12-01', 14)\nst = alerta('CHL', '2021-12-01')", 9, DARK)
+code = [
+    ("fecha", "base_ma7", "holt", "lim_inf", "lim_sup"),
+    ("2021-12-02", "2167.86", "1523.05", "639.09", "2407.01"),
+    ("2021-12-03", "2167.86", "1523.10", "639.14", "2407.06"),
+    ("...", "...", "...", "...", "..."),
+    ("2021-12-15", "2167.86", "1523.66", "639.70", "2407.62"),
+]
+rect(s, 0.56, 3.5, 12.2, 0.2, LINE)
+textbox(s, 0.56, 3.48, 5.0, 0.24, "Pronóstico (14 días):", 10, RED, True)
+textbox(s, 0.56, 3.75, 12.2, 1.35, "; ".join(" ".join(c) for c in code), 8, DARK)
+rect(s, 0.56, 5.2, 12.2, 0.2, LINE)
+textbox(s, 0.56, 5.18, 3.4, 0.24, "alerta:", 10, RED, True)
+textbox(s, 4.05, 5.18, 8.15, 0.24, "activa=False  var_semanal=-0.082  incidencia_ma7=11.34", 9, DARK)
+notes(s, """
+EJECUCIÓN DE CÓDIGO (≈35 s). Ejecutamos pronosticar y alerta sobre Chile con fecha de corte 2021-12-01. Outptus: serie de 639 días terminando 2021-12-01 (fuga de datos no: pronóstico solo usa ≤ corte). pronosticar: base_ma7 = 2167.86 y holt de 1523.05 → 1523.66 en los 14 días. Comparación con lo real: promedio MA7 x14 días después = 1730.3 vs holt 1523.4 (el modelo pesca ya achicar el pico, como esperado con corte antes del 21-dic).
+""")
+
+# ----------------------------------------------------------- 18 · cierre ----
+s = base("Preguntas", "Todos podemos explicar y ejecutar cualquier parte del proyecto", "CIERRE", 18)
 rect(s, 0.56, 2.0, 12.2, 2.1, LIGHT, LINE, rounded=True)
 rect(s, 0.56, 2.0, 0.09, 2.1, RED)
 textbox(s, 1.0, 2.28, 11.3, 0.7, "Del dato a la decisión, con fecha de corte", 28, RED, True)
